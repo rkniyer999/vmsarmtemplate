@@ -11,11 +11,11 @@
             "type": "String"
         },
         "accounts_vmsface_name": {
-            "defaultValue": "vmsface",
+            "defaultValue": "",
             "type": "String"
         },
         "virtualMachines_vmsmachine_name": {
-            "defaultValue": "vmsmachine",
+            "defaultValue": "vmswinmachine",
             "type": "String"
         },
         "publicIPAddresses_vmsstaticip_name": {
@@ -31,7 +31,7 @@
             "type": "String"
         },
         "storageAccounts_sqlva5lvqhcayr5yhi_name": {
-            "defaultValue": "sqlva5lvqhcayr5yhi",
+            "defaultValue": "",
             "type": "String"
         },
         "networkSecurityGroups_vmsmachine_nsg_name": {
@@ -41,7 +41,11 @@
         "schedules_shutdown_computevm_vmsmachine_name": {
             "defaultValue": "shutdown-computevm-vmsmachine",
             "type": "String"
-        }
+        },
+		"dbservernameAdminLoginPassword":{
+			"defaultValue":"Newuser@123",
+			"type":"String"
+		}
     },
     "variables": {},
     "resources": [
@@ -176,6 +180,7 @@
             "kind": "v12.0",
             "properties": {
                 "administratorLogin": "vmsdbadmin",
+				 "administratorLoginPassword": "[parameters('dbservernameAdminLoginPassword')]",
                 "version": "12.0"
             }
         },
@@ -235,7 +240,7 @@
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
-                            "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('virtualMachines_vmsmachine_name'), '_OsDisk_1_2d3065540f8c473b9112b35e4d319c08'))]"
+                            "storageAccountType": "Standard_LRS"
                         }
                     },
                     "dataDisks": []
